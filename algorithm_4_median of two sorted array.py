@@ -46,6 +46,36 @@ class Solution(object):
 
     # O(logn)
     def findMedianSortedArrays3(self, nums1, nums2):
+        length1 = len(nums1)
+        length2 = len(nums2)
+        if length1 >= length2:
+            maxi = length1
+            tempnums1 = nums1
+            tempnums2 = nums2
+            lengthi = length1
+            lengthj = length2
+        else:
+            maxi = length2
+            tempnums1 = nums2
+            tempnums2 = nums1
+            lengthi = length2
+            lengthj = length1
+        mini = 0
+
+        while maxi > mini:
+            i = (maxi + mini) // 2
+            j = (length1+length2)//2 - i # require length1 > length2
+
+            if i-1 > 0 and i < lengthi and j-1 > 0 and j < lengthj:
+                if tempnums1[i-1] <= tempnums2[j] and tempnums2[j-1] <= tempnums1[i]:
+                    return max(tempnums1[i-1],tempnums2[j-1])
+            elif i-1 > 0 and j < lengthi:
+                if tempnums1[i - 1] <= tempnums2[j]:
+                    return tempnums1[i-1]
+            elif i < lengthi and j-1 > 0:
+                if tempnums2[j-1] <= tempnums1[i]:
+                    return tempnums2[j-1]
+
         median = 0
         return median
 
